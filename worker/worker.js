@@ -61,6 +61,19 @@ export default {
       return json({ error: "forbidden: requests must come from the Axiom site" }, 403, cors);
     }
 
+    // Origin-gated setup diagnostic: reports the SHAPE of stored key material
+    // (present / length / first 4 chars / last char) — never the value itself.
+    // All Brave keys start "BSA", so first4 reveals nothing sensitive.
+    if (url.pathname === "/search" && url.searchParams.get("q") === "__health__") {
+      const shape = (name) => {
+        const v = (env[name] || "").trim();
+        return v
+          ? { set: true, length: v.length, first4: v.slice(0, 4), last1: v.slice(-1) }
+          : { set: false };
+      };
+      return json({ BRAVE_KEY2: shape("BRAVE_KEY2"), BRAVE_KEY: shape("BRAVE_KEY") }, 200, cors);
+    }
+
     const q = (url.searchParams.get("q") || "").trim().slice(0, 300);
     if (!q) {
       return json({ error: "empty query" }, 400, cors);
@@ -68,7 +81,10 @@ export default {
 
     // Trim defends against stray whitespace from dashboard pastes; the guard
     // makes "secret never set" distinguishable from "secret malformed".
-    const key = (env.BRAVE_KEY || "").trim();
+    // BRAVE_KEY2 is checked first: adding a fresh variable is an easier
+    // dashboard flow than editing a mangled one, so a correct re-entry can be
+    // added under the new name without touching the old row.
+    const key = (env.BRAVE_KEY2 || "").trim() || (env.BRAVE_KEY || "").trim();
     if (!key) {
       return json({ error: "proxy not armed: BRAVE_KEY secret is not set" }, 503, cors);
     }
