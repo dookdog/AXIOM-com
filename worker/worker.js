@@ -66,12 +66,19 @@ export default {
       return json({ error: "empty query" }, 400, cors);
     }
 
+    // Trim defends against stray whitespace from dashboard pastes; the guard
+    // makes "secret never set" distinguishable from "secret malformed".
+    const key = (env.BRAVE_KEY || "").trim();
+    if (!key) {
+      return json({ error: "proxy not armed: BRAVE_KEY secret is not set" }, 503, cors);
+    }
+
     const upstream = await fetch(
       "https://api.search.brave.com/res/v1/web/search?count=5&q=" + encodeURIComponent(q),
       {
         headers: {
           "Accept": "application/json",
-          "X-Subscription-Token": env.BRAVE_KEY,
+          "X-Subscription-Token": key,
         },
       }
     );
