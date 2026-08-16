@@ -93,6 +93,27 @@ Then in **Settings → Pages**:
 3. Consider swapping `hello@axiom.com` (used in CTAs) for a real mailbox or a form
    endpoint once email is set up on the domain.
 
+## Gated preview (`/preview/`)
+
+`preview/index.html` is a passphrase gate in front of the pre-release **claim gate**
+demo (the synthesized product page). It is real encryption — AES-256-GCM with a
+PBKDF2-derived key, decrypted in the browser via WebCrypto — so the committed file
+contains only ciphertext. The plaintext source lives in `preview-src/` which is
+**gitignored** (this repo is public; committing the plaintext would defeat the gate).
+
+- Run locally (no password needed — you have the source):
+  `python3 -m http.server 8000` → open `http://localhost:8000/preview-src/`
+- Rebuild the gate / change the passphrase:
+  `pip install cryptography && python3 scripts/gate-build.py --password 'new-passphrase'`
+- Recover `preview-src/` on a fresh clone (needs the passphrase):
+  `python3 scripts/gate-build.py --decrypt --password '...'`
+- The gate needs `https://` or `localhost` (WebCrypto secure-context rule); it is
+  `noindex` and disallowed in `robots.txt`.
+
+Anyone with the passphrase can reshare what they see — rotation is re-running the
+build with a new passphrase. Old ciphertext remains in git history, so treat a leaked
+passphrase as burned.
+
 ## Regenerating image assets
 
 The PNGs (favicons, touch icon, og-image) are rendered from the SVG geometry:
