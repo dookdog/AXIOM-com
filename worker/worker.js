@@ -38,13 +38,27 @@ const TAG_RE = /<[^>]+>/g; // Brave descriptions carry <strong> highlights; send
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    const cors = corsHeaders(request.headers.get("Origin") || "");
+    const origin = request.headers.get("Origin") || "";
+    const cors = corsHeaders(origin);
 
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: cors });
     }
+    // Keep crawlers and indexers away from the endpoint entirely.
+    if (url.pathname === "/robots.txt") {
+      return new Response("User-agent: *\nDisallow: /\n", {
+        status: 200,
+        headers: { "Content-Type": "text/plain" },
+      });
+    }
     if (request.method !== "GET" || url.pathname !== "/search") {
       return json({ error: "not found" }, 404, cors);
+    }
+    // Bot gate: only the site's own pages send an allowed Origin. A determined
+    // client can forge this header — the hard backstop is Brave's own quota and
+    // rate limit — but it shuts out crawlers, scrapers, and drive-by curl.
+    if (!ALLOWED_ORIGINS.includes(origin)) {
+      return json({ error: "forbidden: requests must come from the Axiom site" }, 403, cors);
     }
 
     const q = (url.searchParams.get("q") || "").trim().slice(0, 300);
