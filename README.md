@@ -93,26 +93,18 @@ Then in **Settings → Pages**:
 3. Consider swapping `hello@axiom.com` (used in CTAs) for a real mailbox or a form
    endpoint once email is set up on the domain.
 
-## Gated preview (`/preview/`)
+## Pre-release teaser (`/preview/`)
 
-`preview/index.html` is a passphrase gate in front of the pre-release **claim gate**
-demo (the synthesized product page). It is real encryption — AES-256-GCM with a
-PBKDF2-derived key, decrypted in the browser via WebCrypto — so the committed file
-contains only ciphertext. The plaintext source lives in `preview-src/` which is
-**gitignored** (this repo is public; committing the plaintext would defeat the gate).
+`preview/index.html` is the canonical AXIOM claim-gate teaser (© Unicron Studios,
+LLC / ForcedFlow Labs) — the self-contained static page from the pre-release demo
+modules, carrying the JS port of demo ruleset v0.1. It is **openly accessible**:
+anyone with the link can view it, no passphrase. It stays out of search results via
+`Disallow: /preview/` in `robots.txt` (flip that if you ever want it indexed).
 
-- Run locally (no password needed — you have the source):
-  `python3 -m http.server 8000` → open `http://localhost:8000/preview-src/`
-- Rebuild the gate / change the passphrase:
-  `pip install cryptography && python3 scripts/gate-build.py --password 'new-passphrase'`
-- Recover `preview-src/` on a fresh clone (needs the passphrase):
-  `python3 scripts/gate-build.py --decrypt --password '...'`
-- The gate needs `https://` or `localhost` (WebCrypto secure-context rule); it is
-  `noindex` and disallowed in `robots.txt`.
-
-Anyone with the passphrase can reshare what they see — rotation is re-running the
-build with a new passphrase. Old ciphertext remains in git history, so treat a leaked
-passphrase as burned.
+Earlier this path held an AES-256-GCM passphrase gate around the synthesized
+product page. To restore that setup: the encrypted gate page lives in git history
+(the `#3`–`#13` era of `preview/index.html`), and `scripts/gate-build.py` rebuilds
+it from a plaintext `preview-src/index.html` at any time.
 
 ## Regenerating image assets
 
