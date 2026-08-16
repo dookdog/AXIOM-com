@@ -7,6 +7,7 @@
  * This file is public so anyone can verify exactly that.
  *
  * Deploy:  see worker/README.md   Secret:  wrangler secret put BRAVE_KEY
+ * (redeploy touchpoint: settings-sync)
  */
 
 const ALLOWED_ORIGINS = [
