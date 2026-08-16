@@ -97,9 +97,8 @@ Then in **Settings → Pages**:
 
 `preview/index.html` is the canonical AXIOM claim-gate teaser (© Unicron Studios,
 LLC / ForcedFlow Labs) — the self-contained static page from the pre-release demo
-modules, carrying the JS port of demo ruleset v0.1. It is **openly accessible**:
-anyone with the link can view it, no passphrase. It stays out of search results via
-`Disallow: /preview/` in `robots.txt` (flip that if you ever want it indexed).
+modules, carrying the JS port of demo ruleset v0.1. It is **fully unrestricted**:
+no passphrase, open to crawlers (listed in `sitemap.xml`, no robots exclusion).
 
 Earlier this path held an AES-256-GCM passphrase gate around the synthesized
 product page. To restore that setup: the encrypted gate page lives in git history
