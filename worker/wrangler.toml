@@ -1,0 +1,7 @@
+name = "axiom-search-proxy"
+main = "worker.js"
+compatibility_date = "2026-08-01"
+
+# The Brave API key is a secret, never a var:
+#   npx wrangler secret put BRAVE_KEY
+# For local dev, put BRAVE_KEY=... in worker/.dev.vars (gitignored).

@@ -220,3 +220,5 @@ __marimo__/
 # Gated preview: plaintext source stays out of the public repo.
 # Recover with: python3 scripts/gate-build.py --decrypt --password <passphrase>
 preview-src/
+worker/.dev.vars
+.env
