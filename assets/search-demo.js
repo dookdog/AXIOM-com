@@ -18,7 +18,8 @@
      "a live demo search is forwarded through our stateless search proxy
      (source public in /worker) to the Brave Search API; neither logs nor
      stores your query." Honesty outranks features here. */
-  var SEARCH_PROXY = (typeof window !== "undefined" && window.AXIOM_SEARCH_PROXY) || "";
+  var SEARCH_PROXY = (typeof window !== "undefined" && window.AXIOM_SEARCH_PROXY) ||
+    "https://axiom-com.lionelsullivan.workers.dev";
 
   var input = document.getElementById("q");
   var card = document.getElementById("answer");

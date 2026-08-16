@@ -1,4 +1,4 @@
-name = "axiom-search-proxy"
+name = "axiom-com"  # matches the Cloudflare Workers Builds project name
 main = "worker.js"
 compatibility_date = "2026-08-01"
 
