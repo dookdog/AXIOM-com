@@ -214,6 +214,10 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
 /**
  * JS port of demo ruleset v0.1 (canonical: PHP class Axiom_Demo_Engine).
  * Structural read only. No network calls, no timers, no storage.
+ *
+ * v0.1+q (owner-requested forward divergence, port leads, PHP to follow):
+ * questions are detected before gating — a question asserts nothing, so it
+ * returns NULL-by-definition with a handoff link to the search engine.
  */
 (function () {
 	'use strict';
@@ -340,6 +344,26 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
 		out.hidden = false;
 	}
 
+	function isQuestion(text) {
+		return /\?\s*$/.test(text) ||
+			/^(how|what|who|whom|whose|when|where|why|which|is|are|am|do|does|did|can|could|will|would|should|shall|may|might)\b/i.test(text);
+	}
+
+	function renderQuestion(out, claim) {
+		out.textContent = '';
+		out.appendChild(el('span', 'badge null', 'NULL'));
+		out.appendChild(el('p', 'why',
+			'That is a question, not a claim. A question asserts nothing, so the gate has nothing to hold — NULL by definition, not by failure.'));
+		out.appendChild(el('p', 'ceiling',
+			'State it as a claim and the gate will read it. Or take the question to the search engine — it answers instead of judges.'));
+		var p = el('p', 'samples');
+		var a = el('a', null, 'Ask the search engine instead →');
+		a.href = '../?q=' + encodeURIComponent(claim);
+		p.appendChild(a);
+		out.appendChild(p);
+		out.hidden = false;
+	}
+
 	document.addEventListener('DOMContentLoaded', function () {
 		var input = document.getElementById('claim');
 		var button = document.getElementById('run');
@@ -351,6 +375,10 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
 				out.textContent = '';
 				out.appendChild(el('p', 'why', 'Paste a claim first. An empty claim is a null.'));
 				out.hidden = false;
+				return;
+			}
+			if (isQuestion(claim)) {
+				renderQuestion(out, claim.slice(0, 300));
 				return;
 			}
 			render(out, verify(claim.slice(0, 500)));
