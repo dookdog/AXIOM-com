@@ -498,6 +498,51 @@ section {
   color: var(--muted);
 }
 
+.answer-text .hit-title {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--brand-a) 45%, transparent);
+  text-underline-offset: 3px;
+}
+
+.answer-text .hit-title:hover {
+  text-decoration-color: var(--brand-a);
+}
+
+.more-label {
+  margin-top: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.more-hits {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.more-hits li {
+  margin-top: 5px;
+  font-size: 14.5px;
+}
+
+.more-hits a {
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+
+.more-hits a:hover {
+  color: var(--brand-a);
+  text-decoration-color: var(--brand-a);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .answer.pop {
     animation: rise 0.28s ease both;

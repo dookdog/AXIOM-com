@@ -1,5 +1,10 @@
-/* Axiom search demo — a handful of canned instant answers.
-   No network calls, no storage, no tracking. View source and verify. */
+/* Axiom search demo.
+   Two paths, both honest:
+   - Questions about Axiom get canned answers, matched locally in your browser.
+   - Anything else does a LIVE lookup against Wikipedia's public API — the
+     request goes straight from your browser to Wikimedia (we never see it),
+     and the result card says exactly where it came from.
+   No tracking, no storage. View source and verify. */
 (function () {
   "use strict";
 
@@ -10,10 +15,19 @@
   var card = document.getElementById("answer");
   var label = document.getElementById("answer-label");
   var text = document.getElementById("answer-text");
+  var extra = document.getElementById("answer-extra");
+  var foot = document.getElementById("answer-foot");
 
-  /* Most canned answers are about Axiom itself, so they only fire when the
-     query is actually aimed at us — otherwise "Who is X?" or "How fast is Y?"
-     would get an ego answer instead of the honest default. */
+  var CANNED_FOOT = "0 trackers · 0 ads · 1 answer";
+  var LIVE_FOOT = "0 trackers · 0 ads · fetched from Wikipedia’s open API by your browser";
+
+  var WIKI_API =
+    "https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*" +
+    "&generator=search&gsrlimit=3&prop=extracts%7Cinfo&exintro=1&explaintext=1" +
+    "&exsentences=2&inprop=url&gsrsearch=";
+
+  /* Canned answers about Axiom only fire when the query is actually aimed at
+     us — otherwise "Who is X?" would get an ego answer instead of a real one. */
   var AIMED_AT_US = /\baxiom\b|\byou\b|\byour\b|\bthis\b/;
 
   var ANSWERS = [
@@ -80,33 +94,124 @@
     }
   ];
 
-  var DEFAULT_ANSWER = {
-    label: "Instant answer",
-    html:
-      "The full index is still warming up — this demo only knows a handful of things " +
-      "(try a suggestion below). The real Axiom launches soon. It already refuses to track you, " +
-      "though. <strong>Some features ship early.</strong>"
-  };
+  function el(tag, className, textContent) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    if (textContent !== undefined) node.textContent = textContent;
+    return node;
+  }
+
+  function showCard() {
+    card.hidden = false;
+    card.classList.remove("pop");
+    void card.offsetWidth; /* restart the entrance animation */
+    card.classList.add("pop");
+  }
+
+  function renderCanned(answer) {
+    label.textContent = answer.label;
+    text.innerHTML = answer.html; /* trusted, hand-written strings only */
+    extra.textContent = "";
+    foot.textContent = CANNED_FOOT;
+    showCard();
+  }
+
+  function renderSearching(q) {
+    label.textContent = "Searching…";
+    text.textContent = "Looking up “" + q + "” in the live index.";
+    extra.textContent = "";
+    foot.textContent = LIVE_FOOT;
+    showCard();
+  }
+
+  /* Live results are untrusted text: everything lands via textContent. */
+  function renderHits(pages) {
+    var top = pages[0];
+    label.textContent = "Live answer";
+    text.textContent = "";
+    var t = el("a", "hit-title", top.title);
+    t.href = top.fullurl || "#";
+    t.target = "_blank";
+    t.rel = "noopener";
+    text.appendChild(t);
+    text.appendChild(el("span", null, " — " + (top.extract || "No summary available.")));
+
+    extra.textContent = "";
+    if (pages.length > 1) {
+      var list = el("ul", "more-hits");
+      for (var i = 1; i < pages.length; i++) {
+        var li = el("li");
+        var a = el("a", null, pages[i].title);
+        a.href = pages[i].fullurl || "#";
+        a.target = "_blank";
+        a.rel = "noopener";
+        li.appendChild(a);
+        list.appendChild(li);
+      }
+      var more = el("p", "more-label", "More from the index:");
+      extra.appendChild(more);
+      extra.appendChild(list);
+    }
+    foot.textContent = LIVE_FOOT;
+    showCard();
+  }
+
+  function renderMiss() {
+    label.textContent = "No result";
+    text.textContent =
+      "The live index has nothing solid for that one, and Axiom doesn’t pad a " +
+      "miss into a maybe. An honest scale sometimes reads zero.";
+    extra.textContent = "";
+    foot.textContent = LIVE_FOOT;
+    showCard();
+  }
+
+  function renderError() {
+    label.textContent = "Index unreachable";
+    text.textContent =
+      "Couldn’t reach the live index (Wikipedia’s public API) from your " +
+      "browser just now. The canned answers below still work — try a suggestion.";
+    extra.textContent = "";
+    foot.textContent = "0 trackers · 0 ads · 0 answers — said so instead";
+    showCard();
+  }
+
+  var seq = 0;
+
+  function liveSearch(q) {
+    var mine = ++seq;
+    renderSearching(q);
+    var ctl = typeof AbortController !== "undefined" ? new AbortController() : null;
+    if (ctl) setTimeout(function () { ctl.abort(); }, 8000);
+    fetch(WIKI_API + encodeURIComponent(q), ctl ? { signal: ctl.signal } : {})
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (mine !== seq) return;
+        var raw = (d && d.query && d.query.pages) || {};
+        var pages = Object.keys(raw).map(function (k) { return raw[k]; });
+        pages.sort(function (a, b) { return (a.index || 9) - (b.index || 9); });
+        pages.length ? renderHits(pages) : renderMiss();
+      })
+      .catch(function () {
+        if (mine !== seq) return;
+        renderError();
+      });
+  }
 
   function respond(query) {
     var q = query.trim();
     if (!q) return;
     var norm = q.toLowerCase().replace(/[^a-z0-9\s]/g, " ");
     var aimedAtUs = AIMED_AT_US.test(norm);
-    var found = DEFAULT_ANSWER;
     for (var i = 0; i < ANSWERS.length; i++) {
       if (ANSWERS[i].aboutUs && !aimedAtUs) continue;
       if (ANSWERS[i].match.test(norm)) {
-        found = ANSWERS[i];
-        break;
+        seq++; /* cancel any in-flight live render */
+        renderCanned(ANSWERS[i]);
+        return;
       }
     }
-    label.textContent = found.label;
-    text.innerHTML = found.html;
-    card.hidden = false;
-    card.classList.remove("pop");
-    void card.offsetWidth; /* restart the entrance animation */
-    card.classList.add("pop");
+    liveSearch(q.slice(0, 300));
   }
 
   form.addEventListener("submit", function (e) {
