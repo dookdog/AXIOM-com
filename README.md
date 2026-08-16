@@ -21,6 +21,7 @@ most of which is the social-share image.
 │   ├── mark.svg            The bare mark: a peak and a point
 │   ├── favicon.svg         Vector favicon (plus PNG fallbacks alongside)
 │   └── og-image.png        1200×630 social card (rendered from the SVG geometry)
+├── preview/index.html      Pre-release claim-gate demo teaser (unlisted — see below)
 ├── scripts/render-assets.py  Regenerates all PNG assets from the SVG geometry
 ├── sitemap.xml · robots.txt · site.webmanifest · opensearch.xml
 ├── CNAME                   Custom domain for GitHub Pages (axiom.com)
@@ -93,26 +94,23 @@ Then in **Settings → Pages**:
 3. Consider swapping `hello@axiom.com` (used in CTAs) for a real mailbox or a form
    endpoint once email is set up on the domain.
 
-## Gated preview (`/preview/`)
+## Pre-release demo (`/preview/`)
 
-`preview/index.html` is a passphrase gate in front of the pre-release **claim gate**
-demo (the synthesized product page). It is real encryption — AES-256-GCM with a
-PBKDF2-derived key, decrypted in the browser via WebCrypto — so the committed file
-contains only ciphertext. The plaintext source lives in `preview-src/` which is
-**gitignored** (this repo is public; committing the plaintext would defeat the gate).
+`preview/index.html` is the pre-release **claim gate** demo teaser: a single
+self-contained file — no external requests, no build step, no timers. The interactive
+box runs a JS port of the demo ruleset v0.1, a structural read of a claim's *form*:
+it fetches nothing, verifies nothing, and says so on every result (the demo never
+awards DOCUMENTED). The page takes no signups by design — a form with no backend
+would be theater.
 
-- Run locally (no password needed — you have the source):
-  `python3 -m http.server 8000` → open `http://localhost:8000/preview-src/`
-- Rebuild the gate / change the passphrase:
-  `pip install cryptography && python3 scripts/gate-build.py --password 'new-passphrase'`
-- Recover `preview-src/` on a fresh clone (needs the passphrase):
-  `python3 scripts/gate-build.py --decrypt --password '...'`
-- The gate needs `https://` or `localhost` (WebCrypto secure-context rule); it is
-  `noindex` and disallowed in `robots.txt`.
+The page is unlisted rather than secret: it is not linked from the site nav, not in
+`sitemap.xml`, and `/preview/` is disallowed in `robots.txt`. Share it by direct
+link, or lift those two exclusions when it should become discoverable.
 
-Anyone with the passphrase can reshare what they see — rotation is re-running the
-build with a new passphrase. Old ciphertext remains in git history, so treat a leaked
-passphrase as burned.
+This ungated teaser replaced the earlier passphrase gate (2026-08-16). The gate
+tooling is kept for future private drops: `scripts/gate-build.py` encrypts
+`preview-src/index.html` (gitignored) into a self-decrypting page — see the script's
+docstring for usage.
 
 ## Regenerating image assets
 
