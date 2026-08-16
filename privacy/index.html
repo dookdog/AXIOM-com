@@ -106,7 +106,7 @@
 
     <div class="container prose">
       <div class="callout">
-        <p><strong>The whole policy in three lines:</strong> This website sets no cookies and runs no analytics. The only outbound request it ever makes is the one you trigger yourself — a live demo search, sent from your browser straight to Wikipedia&rsquo;s public API, never through us. Nothing here builds a profile of you, and nothing ever will.</p>
+        <p><strong>The whole policy in three lines:</strong> This website sets no cookies and runs no analytics. The only outbound request it ever makes is the one you trigger yourself — a live demo search, forwarded through a stateless proxy that doesn&rsquo;t log it (source public in this repo). Nothing here builds a profile of you, and nothing ever will.</p>
       </div>
 
       <h2>This website (axiom.com)</h2>
@@ -116,7 +116,7 @@
         <li>includes <strong>no analytics, no tracking pixels, and no fingerprinting</strong> of any kind;</li>
         <li>loads with <strong>no third-party requests</strong> — no CDNs, no external fonts, no embedded widgets;</li>
         <li>answers questions about Axiom in the demo <strong>entirely in your browser</strong> — those canned answers never leave your device;</li>
-        <li>for other demo searches, sends your query <strong>directly from your browser to Wikipedia&rsquo;s public API</strong> to fetch a live result. That request never touches an Axiom server — we can&rsquo;t see it, log it, or store it — and it is governed by the <a href="https://foundation.wikimedia.org/wiki/Policy:Privacy_policy" rel="noopener">Wikimedia privacy policy</a>. The result card labels its source every time.</li>
+        <li>for other demo searches, forwards your query through our <strong>stateless search proxy</strong> to the Brave Search API to fetch live web results. The proxy passes the query through without logging or storing it — its full source code is public in this site&rsquo;s repository (<span style="font-family:var(--font-mono);font-size:0.9em">/worker</span>) precisely so that claim is checkable — and Brave&rsquo;s handling is governed by the <a href="https://brave.com/privacy/browser/" rel="noopener">Brave privacy policy</a>. If the proxy is unreachable, your browser falls back to querying <a href="https://foundation.wikimedia.org/wiki/Policy:Privacy_policy" rel="noopener">Wikipedia&rsquo;s public API</a> directly. Either way, the result card labels its source every time.</li>
       </ul>
       <p>You can verify all of this in your browser&rsquo;s developer tools; the network tab is the whole audit.</p>
       <p>The site is served by GitHub Pages, which — like any web host — receives standard request logs (such as IP addresses) to deliver pages and keep the service secure. That data is handled under the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub Privacy Statement</a>; we never see it, enrich it, or use it.</p>
