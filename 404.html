@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page Not Found — Axiom</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b1023" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="/" aria-label="Axiom — home">
+        <svg viewBox="0 0 238 57" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="g-nav" x1="12" y1="52" x2="52" y2="8" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#06b6d4"/><stop offset="1" stop-color="#4f46e5"/>
+            </linearGradient>
+          </defs>
+          <path d="M12 47.5 L32 8.5 L52 47.5" fill="none" stroke="url(#g-nav)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="32" cy="45" r="7" fill="url(#g-nav)"/>
+          <g fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" transform="translate(68.5 0)">
+            <circle cx="15" cy="37" r="11"/><path d="M26 26 V48"/>
+            <path d="M41 26 L59 48 M59 26 L41 48"/>
+            <path d="M74 26 V48"/>
+            <circle cx="100" cy="37" r="11"/>
+            <path d="M126 48 V34 A8 8 0 0 1 142 34 V48 M142 34 A8 8 0 0 1 158 34 V48"/>
+          </g>
+          <circle cx="142.5" cy="12.5" r="4.5" fill="#06b6d4"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <main id="main" class="notfound">
+    <div class="container">
+      <p class="code" aria-hidden="true">404</p>
+      <h1>No results for that URL.</h1>
+      <p>Even a search engine 404s sometimes. The page you asked for moved, never existed, or couldn&rsquo;t earn its rank. The answer you want is probably one click from the home page.</p>
+      <a class="btn" href="/">Back to the point</a>
+    </div>
+  </main>
+
+  <script>
+    /* When previewed on <user>.github.io/<repo>/ (before the custom domain is
+       attached), rewrite root-relative links so they stay inside the repo path. */
+    (function () {
+      if (!location.hostname.endsWith("github.io")) return;
+      var repo = location.pathname.split("/")[1];
+      if (!repo) return;
+      var base = "/" + repo;
+      document.querySelectorAll('a[href^="/"], link[href^="/"]').forEach(function (el) {
+        var href = el.getAttribute("href");
+        if (href.indexOf(base + "/") !== 0) el.setAttribute("href", base + href);
+      });
+    })();
+  </script>
+</body>
+</html>

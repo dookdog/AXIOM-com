@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Axiom — The Private Search Engine That Gets to the Point</title>
+  <meta name="description" content="Axiom is a fast, private search engine with no ads dressed as results and no tracking — just the shortest path from question to answer. Search, self-evident.">
+  <link rel="canonical" href="https://axiom.com/">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b1023" media="(prefers-color-scheme: dark)">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Axiom">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://axiom.com/">
+  <meta property="og:title" content="Axiom — The Private Search Engine That Gets to the Point">
+  <meta property="og:description" content="No ads dressed as results. No tracking. Just the shortest path from question to answer. Search, self-evident.">
+  <meta property="og:image" content="https://axiom.com/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Axiom logo — a peak with a point — and the tagline: the search engine that gets to the point.">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Axiom — The Private Search Engine That Gets to the Point">
+  <meta name="twitter:description" content="No ads dressed as results. No tracking. Just the shortest path from question to answer.">
+  <meta name="twitter:image" content="https://axiom.com/assets/og-image.png">
+  <meta name="twitter:image:alt" content="Axiom logo — a peak with a point — and the tagline: the search engine that gets to the point.">
+
+  <!-- Icons & app metadata -->
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="search" href="opensearch.xml" type="application/opensearchdescription+xml" title="Axiom">
+  <link rel="sitemap" href="sitemap.xml" type="application/xml">
+
+  <link rel="stylesheet" href="assets/site.css">
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://axiom.com/#org",
+        "name": "Axiom",
+        "url": "https://axiom.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://axiom.com/assets/icon-512.png",
+          "width": 512,
+          "height": 512
+        },
+        "slogan": "The search engine that gets to the point.",
+        "email": "hello@axiom.com",
+        "description": "Axiom is a fast, private search engine built from first principles: answers first, privacy by default, no ads dressed as results."
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://axiom.com/#website",
+        "url": "https://axiom.com/",
+        "name": "Axiom",
+        "description": "A fast, private search engine that gets you from question to answer in one step.",
+        "publisher": { "@id": "https://axiom.com/#org" },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://axiom.com/?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://axiom.com/#webpage",
+        "url": "https://axiom.com/",
+        "name": "Axiom — The Private Search Engine That Gets to the Point",
+        "isPartOf": { "@id": "https://axiom.com/#website" },
+        "about": { "@id": "https://axiom.com/#org" },
+        "description": "Axiom is a fast, private search engine with no ads dressed as results and no tracking — just the shortest path from question to answer.",
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://axiom.com/assets/og-image.png"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://axiom.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is Axiom available yet?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Axiom is in private beta while we finish the public index. This site is where the launch happens — request early access and you'll be first in line."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does Axiom make money without ads?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Core search is free. A paid Axiom Pro tier will add power features — deeper research tools, API access, workspace features — for people who live in a search bar. We sell software, not searchers."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Axiom track my searches?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Queries are processed to serve your results, then aggregated or discarded. No advertising profile, no identity graph, no selling data. The details live on our privacy page."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I set Axiom as my browser's default search engine?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes — at launch Axiom will plug into every major browser through the standard OpenSearch protocol (this site already ships the descriptor), so switching takes one click in your browser settings."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is it called Axiom?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "An axiom is a truth so basic it needs no proof. We run the product the same way: five axioms, everything else derived from them. It also looks great with a dot on the i."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="./" aria-label="Axiom — home">
+        <svg viewBox="0 0 238 57" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="g-nav" x1="12" y1="52" x2="52" y2="8" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#06b6d4"/><stop offset="1" stop-color="#4f46e5"/>
+            </linearGradient>
+          </defs>
+          <path d="M12 47.5 L32 8.5 L52 47.5" fill="none" stroke="url(#g-nav)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="32" cy="45" r="7" fill="url(#g-nav)"/>
+          <g fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" transform="translate(68.5 0)">
+            <circle cx="15" cy="37" r="11"/><path d="M26 26 V48"/>
+            <path d="M41 26 L59 48 M59 26 L41 48"/>
+            <path d="M74 26 V48"/>
+            <circle cx="100" cy="37" r="11"/>
+            <path d="M126 48 V34 A8 8 0 0 1 142 34 V48 M142 34 A8 8 0 0 1 158 34 V48"/>
+          </g>
+          <circle cx="142.5" cy="12.5" r="4.5" fill="#06b6d4"/>
+        </svg>
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a class="nav-link" href="#why">Why Axiom</a>
+        <a class="nav-link" href="#axioms">Our Axioms</a>
+        <a class="nav-link" href="#faq">FAQ</a>
+        <a class="nav-link" href="about/">About</a>
+        <a class="btn btn-sm" href="#cta">Get early access</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero + search demo -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <p class="hero-badge"><span class="pulse" aria-hidden="true"></span> Private beta — public launch coming soon</p>
+        <h1 id="hero-title">The search engine that <span class="grad-text">gets to the point.</span></h1>
+        <p class="hero-sub">Axiom is a fast, private search engine built on a simple idea: you came for an answer, not an auction. No tracked clicks, no ads dressed up as results — just the shortest path from question to answer.</p>
+
+        <div class="search-wrap">
+          <form id="demo-form" class="searchbar" role="search" action="./" method="get">
+            <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+              <defs>
+                <linearGradient id="g-sb" x1="12" y1="52" x2="52" y2="8" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="#06b6d4"/><stop offset="1" stop-color="#4f46e5"/>
+                </linearGradient>
+              </defs>
+              <path d="M12 52 L32 12 L52 52" fill="none" stroke="url(#g-sb)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="32" cy="45" r="7" fill="url(#g-sb)"/>
+            </svg>
+            <input id="q" name="q" type="search" placeholder="Ask anything…" autocomplete="off" enterkeyhint="search" aria-label="Search query">
+            <button class="btn" type="submit">Search</button>
+          </form>
+
+          <ul class="chips" aria-label="Example searches">
+            <li><button class="chip" type="button">What is an axiom?</button></li>
+            <li><button class="chip" type="button">Does Axiom track me?</button></li>
+            <li><button class="chip" type="button">How is Axiom funded?</button></li>
+            <li><button class="chip" type="button">Why the name Axiom?</button></li>
+          </ul>
+
+          <div id="answer" class="answer" hidden aria-live="polite">
+            <div class="answer-accent" aria-hidden="true"></div>
+            <div class="answer-body">
+              <p class="answer-meta">
+                <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                  <path d="M12 52 L32 12 L52 52" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="32" cy="45" r="7" fill="currentColor"/>
+                </svg>
+                <span id="answer-label">Instant answer</span>
+              </p>
+              <p class="answer-text" id="answer-text"></p>
+              <p class="answer-foot">0 trackers &middot; 0 ads &middot; 1 answer</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Axiom -->
+    <section id="why" class="section" aria-labelledby="why-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="kicker">Why Axiom</p>
+          <h2 id="why-title">Search got complicated. Answers didn&rsquo;t.</h2>
+          <p>Somewhere along the way, search engines started optimizing for everyone except the person searching. Axiom is what you get when you delete everything that isn&rsquo;t the answer.</p>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.5"/>
+              </svg>
+            </div>
+            <h3>Answers first</h3>
+            <p>The best result is an answer, not a scavenger hunt. Axiom reads the web so your first click is usually your last.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3l7.5 3v5.2c0 4.6-3.2 8.2-7.5 10-4.3-1.8-7.5-5.4-7.5-10V6z"/><path d="M9 12l2 2 4-4.5"/>
+              </svg>
+            </div>
+            <h3>Private by default</h3>
+            <p>No account required, no history tied to you, no ad-tech shadowing your queries. What you search is your business.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <circle cx="12" cy="12" r="8.5"/><path d="M6.2 6.2l11.6 11.6"/>
+              </svg>
+            </div>
+            <h3>Zero ad clutter</h3>
+            <p>Results can&rsquo;t be bought. Nothing above the fold is sponsored, because nothing anywhere is sponsored.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13 2.5L5.5 13.5H11l-1 8L18.5 10.5H13z"/>
+              </svg>
+            </div>
+            <h3>Fast everywhere</h3>
+            <p>A results page measured in kilobytes, not megabytes — built to feel instant on a phone in a subway, not just in a lab.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Axioms -->
+    <section id="axioms" class="section section-soft center" aria-labelledby="axioms-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="kicker">First principles</p>
+          <h2 id="axioms-title">Our axioms</h2>
+          <p>Most companies have values. We have axioms — five statements the whole product is derived from. When a feature contradicts one, the feature loses.</p>
+        </div>
+        <ol class="axioms">
+          <li>
+            <div>
+              <h3>The answer is the interface.</h3>
+              <p>Everything on the results page either moves you toward the answer or it doesn&rsquo;t ship. There is no third category.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Your attention belongs to you.</h3>
+              <p>We can&rsquo;t sell what we refuse to collect. No auction runs behind your query, and no one bids on your eyeballs.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Privacy is a default, not a setting.</h3>
+              <p>Protection you have to configure is protection most people never get. Axiom&rsquo;s strictest mode is the one it ships in.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Speed is respect.</h3>
+              <p>Every millisecond between question and answer is yours, not ours. We budget them like money.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Rank is earned.</h3>
+              <p>No result can pay its way to the top. If a page can&rsquo;t earn its position, it doesn&rsquo;t get one.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta" class="section" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="cta">
+          <h2 id="cta-title">Be first to the answer.</h2>
+          <p>Axiom is rolling out in waves. Tell us where to find you and we&rsquo;ll send exactly one email — the one that says your search bar is ready.</p>
+          <div class="cta-actions">
+            <a class="btn btn-light" href="mailto:hello@axiom.com?subject=Early%20access%20to%20Axiom">Request early access</a>
+            <a class="btn btn-outline" href="#axioms">Read our axioms</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section center" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="kicker">FAQ</p>
+          <h2 id="faq-title">Fair questions, straight answers</h2>
+        </div>
+        <div class="faq-list">
+          <details>
+            <summary>Is Axiom available yet?</summary>
+            <p class="faq-a">Axiom is in private beta while we finish the public index. This site is where the launch happens — request early access and you&rsquo;ll be first in line.</p>
+          </details>
+          <details>
+            <summary>How does Axiom make money without ads?</summary>
+            <p class="faq-a">Core search is free. A paid Axiom Pro tier will add power features — deeper research tools, API access, workspace features — for people who live in a search bar. We sell software, not searchers.</p>
+          </details>
+          <details>
+            <summary>Does Axiom track my searches?</summary>
+            <p class="faq-a">No. Queries are processed to serve your results, then aggregated or discarded. No advertising profile, no identity graph, no selling data. The details live on our <a href="privacy/">privacy page</a>.</p>
+          </details>
+          <details>
+            <summary>Can I set Axiom as my browser&rsquo;s default search engine?</summary>
+            <p class="faq-a">Yes — at launch Axiom will plug into every major browser through the standard OpenSearch protocol (this site already ships the descriptor), so switching takes one click in your browser settings.</p>
+          </details>
+          <details>
+            <summary>Why is it called Axiom?</summary>
+            <p class="faq-a">An axiom is a truth so basic it needs no proof. We run the product the same way: five axioms, everything else derived from them. It also looks great with a dot on the i.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="brand" href="./" aria-label="Axiom — home">
+            <svg viewBox="0 0 238 57" aria-hidden="true" focusable="false">
+              <defs>
+                <linearGradient id="g-foot" x1="12" y1="52" x2="52" y2="8" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="#06b6d4"/><stop offset="1" stop-color="#4f46e5"/>
+                </linearGradient>
+              </defs>
+              <path d="M12 47.5 L32 8.5 L52 47.5" fill="none" stroke="url(#g-foot)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="32" cy="45" r="7" fill="url(#g-foot)"/>
+              <g fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" transform="translate(68.5 0)">
+                <circle cx="15" cy="37" r="11"/><path d="M26 26 V48"/>
+                <path d="M41 26 L59 48 M59 26 L41 48"/>
+                <path d="M74 26 V48"/>
+                <circle cx="100" cy="37" r="11"/>
+                <path d="M126 48 V34 A8 8 0 0 1 142 34 V48 M142 34 A8 8 0 0 1 158 34 V48"/>
+              </g>
+              <circle cx="142.5" cy="12.5" r="4.5" fill="#06b6d4"/>
+            </svg>
+          </a>
+          <p>The search engine that gets to the point. Private by default, fast by design, derived from five axioms.</p>
+        </div>
+        <nav class="footer-cols" aria-label="Footer">
+          <div class="footer-col">
+            <h4>Product</h4>
+            <ul>
+              <li><a href="#why">Why Axiom</a></li>
+              <li><a href="#axioms">Our Axioms</a></li>
+              <li><a href="#faq">FAQ</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="about/">About</a></li>
+              <li><a href="privacy/">Privacy</a></li>
+              <li><a href="mailto:hello@axiom.com">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Axiom. Search, self-evident.</p>
+        <p>No cookies. No trackers. This site is exactly what it looks like.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/search-demo.js" defer></script>
+</body>
+</html>
