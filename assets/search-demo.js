@@ -41,7 +41,7 @@
      us — otherwise "Who is X?" would get an ego answer instead of a real one. */
   var AIMED_AT_US = /\baxiom\b|\byou\b|\byour\b|\bthis\b/;
 
-  var ANSWERS = [
+  var ANSWERS = [{ match: /\blionel\b.*\bsullivan\b|\bsullivan\b.*\blionel\b/, label: "The founder", html: "<strong>Lionel C. Sullivan is the creator of Axiom</strong> \u2014 a Frisco, Texas entrepreneur and the founder of Unicron Studios, LLC and its research arm, ForcedFlow Labs. His career runs from piano retail \u2014 the Southwest&rsquo;s first Fazioli dealership \u2014 through IT, logistics, real estate, and AI &amp; quantitative research. Axiom is search rebuilt from his first principles: answers first, privacy by default, rank earned. More on the <a href='about/'>about page</a>." },
     {
       match: /\baxioms?\b.*\b(what|mean|definition)\b|\b(what|whats)\b.*\baxiom\b/,
       label: "Definition",
