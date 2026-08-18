@@ -4,7 +4,7 @@
   <LongName>Axiom Search</LongName>
   <Description>Axiom — the private search engine that gets to the point.</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Image width="32" height="32" type="image/png">https://axiom.com/assets/favicon-32.png</Image>
-  <Url type="text/html" method="get" template="https://axiom.com/?q={searchTerms}"/>
-  <moz:SearchForm xmlns:moz="http://www.mozilla.org/2006/browser/search/">https://axiom.com/</moz:SearchForm>
+  <Image width="32" height="32" type="image/png">https://axiom.inc/assets/favicon-32.png</Image>
+  <Url type="text/html" method="get" template="https://axiom.inc/?q={searchTerms}"/>
+  <moz:SearchForm xmlns:moz="http://www.mozilla.org/2006/browser/search/">https://axiom.inc/</moz:SearchForm>
 </OpenSearchDescription>

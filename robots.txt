@@ -1,5 +1,5 @@
-# axiom.com — everyone is welcome, including crawlers.
+# axiom.inc — everyone is welcome, including crawlers.
 User-agent: *
 Allow: /
 
-Sitemap: https://axiom.com/sitemap.xml
+Sitemap: https://axiom.inc/sitemap.xml
