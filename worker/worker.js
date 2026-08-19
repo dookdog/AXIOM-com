@@ -12,8 +12,8 @@
 
 const ALLOWED_ORIGINS = [
   "https://dookdog.github.io",
-  "https://axiom.com",
-  "https://www.axiom.com",
+  "https://axiom.inc",
+  "https://www.axiom.inc",
   "http://localhost:8000",
   "http://127.0.0.1:8000",
 ];

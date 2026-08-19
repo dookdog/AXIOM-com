@@ -45,7 +45,7 @@ curl 'http://localhost:8787/search?q=test'
 
 ## Notes
 
-- Allowed origins are pinned in `worker.js` (`dookdog.github.io`, `axiom.com`,
+- Allowed origins are pinned in `worker.js` (`dookdog.github.io`, `axiom.inc`,
   localhost). Add domains there if the site moves.
 - Brave free tier: ~2,000 queries/month, 1 req/sec. The worker sets a 5-minute
   edge cache on identical queries to stretch it.
