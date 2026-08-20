@@ -322,7 +322,45 @@
           <h2 id="cta-title">Be first to the answer.</h2>
           <p>Axiom is rolling out in waves. Tell us where to find you and we&rsquo;ll send exactly one email — the one that says your search bar is ready.</p>
           <div class="cta-actions">
-            <a class="btn btn-light" href="mailto:lionelsullivan@gmail.com?subject=Early%20access%20to%20Axiom">Request early access</a>
+            <span id="ax-cta" style="display:flex;flex-direction:column;gap:10px;max-width:420px;width:100%;text-align:start">
+  <span style="display:flex;gap:8px;flex-wrap:wrap">
+    <input id="ax-email" type="email" placeholder="you@domain.com" autocomplete="email" required
+      style="flex:1;min-width:200px;padding:12px 14px;border-radius:10px;border:1px solid rgba(120,140,170,.4);background:transparent;color:inherit;font:inherit;font-size:15px">
+    <button id="ax-submit" class="btn btn-light" type="button">Request early access</button>
+  </span>
+  <label style="display:flex;gap:8px;align-items:flex-start;font-size:12.5px;opacity:.85">
+    <input id="ax-consent" type="checkbox" style="margin-top:3px">
+    <span>Email me once when Axiom early access opens. No sharing, no spam.</span>
+  </label>
+  <span id="ax-msg" role="status" aria-live="polite" style="min-height:18px;font-size:13px"></span>
+</span>
+<script>
+(function () {
+  var W = "https://tare-early-access.lionelsullivan.workers.dev";
+  var e = document.getElementById("ax-email"), b = document.getElementById("ax-submit"),
+      c = document.getElementById("ax-consent"), m = document.getElementById("ax-msg");
+  function say(t, ok){ m.textContent = t; m.style.color = ok ? "#2e9e6b" : "#c0392b"; }
+  async function go(){
+    var v = (e.value||"").trim();
+    if(!v){ say("Enter your email to continue.", false); e.focus(); return; }
+    if(!c.checked){ say("Please tick the box so we can email you.", false); return; }
+    b.disabled = true; say("Adding you\u2026", true);
+    try{
+      var r = await fetch(W + "/api/signup", { method:"POST",
+        headers:{ "content-type":"application/json" },
+        body: JSON.stringify({ email:v, consent:true, source:"axiom.inc" }) });
+      var d = await r.json().catch(function(){return {};});
+      if(r.ok){ say(d.status==="already_registered" ? "You're already on the list \u2014 we've got you."
+        : d.status==="pending" ? "Almost there \u2014 check your email to confirm."
+        : "You're on the list. We'll email you once.", true); e.value=""; c.checked=false; }
+      else say(d.message || "Something went wrong. Please try again.", false);
+    }catch(x){ say("Couldn't reach the server. Try again.", false); }
+    finally{ b.disabled = false; }
+  }
+  b.addEventListener("click", go);
+  e.addEventListener("keydown", function(ev){ if(ev.key==="Enter") go(); });
+})();
+</script>
             <a class="btn btn-outline" href="#axioms">Read our axioms</a>
           </div>
         </div>
