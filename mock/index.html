@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>AXIOM — Verification result (design mock)</title>
+<style>
+  :root{
+    --ink:#15202E;        /* brand navy */
+    --teal:#73BEBE;       /* brand teal */
+    --paper:#FFFFFF;
+    --fog:#E8ECEF;
+    --body:#2A3642;
+    --muted:#6B7883;
+    --amber:#B07C2E;      /* INFERRED only */
+    --hair:#D7DEE3;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important;animation:none!important} }
+  body{
+    background:var(--fog);
+    font-family:'Liberation Sans', Arial, Helvetica, sans-serif;
+    color:var(--body);
+    line-height:1.55;
+  }
+  a{color:var(--ink)}
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px}
+
+  /* ---------- sample ribbon ---------- */
+  .ribbon{
+    background:var(--ink);color:#C9D4DC;
+    font-size:11px;letter-spacing:.18em;text-align:center;
+    padding:7px 12px;
+  }
+  .ribbon b{color:var(--teal);font-weight:bold;letter-spacing:.18em}
+
+  /* ---------- header / search ---------- */
+  header{background:var(--paper);border-bottom:1px solid var(--hair)}
+  .bar{display:flex;align-items:center;gap:14px;padding:18px 0}
+  .lockup{display:flex;align-items:center;gap:9px;flex-shrink:0}
+  .lockup .word{font-weight:bold;font-size:15px;letter-spacing:.22em;color:var(--ink)}
+  .search{
+    flex:1;display:flex;align-items:center;gap:10px;
+    border:1.5px solid var(--hair);border-radius:999px;
+    padding:10px 16px;background:var(--paper);
+  }
+  .search:focus-within{border-color:var(--teal)}
+  .search .q{flex:1;font-size:16px;color:var(--ink);border:0;outline:0;font-family:inherit;background:transparent}
+  .search button{
+    background:var(--ink);color:var(--teal);border:0;border-radius:999px;
+    font-size:12px;font-weight:bold;letter-spacing:.14em;padding:8px 16px;cursor:pointer;
+  }
+  .search button:focus-visible,.chip:focus-visible,a:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+  .promise{font-size:11px;letter-spacing:.14em;color:var(--muted);padding-bottom:12px}
+  .promise b{color:var(--ink)}
+
+  /* ---------- glance band ---------- */
+  .glance{background:var(--ink);color:#fff}
+  .glance .cells{display:flex;gap:18px;justify-content:space-between;padding:14px 0 13px;flex-wrap:wrap}
+  .cell{min-width:96px}
+  .cell .num{font-family:'Liberation Serif', Georgia, 'Times New Roman', serif;font-weight:bold;font-size:19px;color:var(--teal)}
+  .cell .lbl{font-size:9.5px;letter-spacing:.12em;color:#C9D4DC;margin-top:2px}
+
+  /* ---------- verdict + answer ---------- */
+  main{background:var(--paper)}
+  .verdict{padding:34px 0 6px}
+  .kicker{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .kickerbar{width:26px;height:9px;background:var(--teal)}
+  .kickerlabel{font-size:10.5px;font-weight:bold;letter-spacing:.24em;color:var(--muted)}
+  h1{
+    font-family:'Liberation Serif', Georgia, 'Times New Roman', serif;
+    font-size:31px;line-height:1.18;color:var(--ink);max-width:620px;
+  }
+  .sub{margin-top:10px;font-size:15.5px;color:var(--body);max-width:600px}
+  .answer{padding:22px 0 8px;max-width:640px}
+  .answer p{margin-bottom:14px;font-size:15px}
+
+  /* tier chips */
+  .chip{
+    display:inline-block;vertical-align:2px;
+    font-size:9.5px;font-weight:bold;letter-spacing:.1em;
+    padding:2px 7px;border-radius:3px;margin-left:5px;
+    text-decoration:none;white-space:nowrap;
+  }
+  .chip--doc{background:var(--teal);color:var(--ink)}
+  .chip--inf{background:transparent;color:var(--amber);border:1.5px dashed var(--amber)}
+  .chip--null{background:var(--ink);color:var(--teal);border:1.5px solid var(--ink)}
+
+  .assume{
+    border-left:3px solid var(--amber);background:#FBF7EE;
+    padding:11px 14px;margin:16px 0 6px;font-size:13.5px;max-width:640px;
+  }
+  .assume b{letter-spacing:.1em;font-size:10.5px;color:var(--amber)}
+
+  /* ---------- THE NULL CARD (signature) ---------- */
+  .nullcard{
+    background:var(--ink);color:#fff;
+    margin:26px 0;padding:26px 26px 22px;
+    border-top:4px solid var(--teal);
+  }
+  .nullhead{display:flex;align-items:flex-start;gap:18px}
+  .gauge{flex-shrink:0}
+  .nullhead .kickerlabel{color:var(--teal)}
+  .nullcard h2{
+    font-family:'Liberation Serif', Georgia, 'Times New Roman', serif;
+    font-size:23px;line-height:1.22;color:#fff;margin-top:6px;max-width:480px;
+  }
+  .nullcard .why{margin-top:10px;font-size:14px;color:#C9D4DC;max-width:520px}
+  .queries{margin-top:18px}
+  .queries .lbl{font-size:10px;font-weight:bold;letter-spacing:.2em;color:var(--teal);margin-bottom:8px}
+  .queries ul{list-style:none}
+  .queries li{
+    font-family:ui-monospace, 'Courier New', monospace;
+    font-size:12.5px;color:#E6EDF1;background:rgba(115,190,190,.10);
+    border-left:2px solid var(--teal);
+    padding:6px 10px;margin-bottom:6px;overflow-wrap:anywhere;
+  }
+  .flip{margin-top:16px;font-size:13.5px;color:#fff;border-top:1px solid rgba(115,190,190,.35);padding-top:13px;max-width:560px}
+  .flip b{color:var(--teal);letter-spacing:.14em;font-size:10.5px}
+  .tagline{margin-top:14px;font-size:12px;color:#8FA1AE;font-style:italic}
+
+  /* ---------- receipts ---------- */
+  .receipts{padding:6px 0 8px}
+  .receipts h3, .method h3{
+    font-family:'Liberation Serif', Georgia, 'Times New Roman', serif;
+    font-size:18px;color:var(--ink);margin-bottom:12px;
+  }
+  .receipt{
+    border:1px solid var(--hair);border-radius:6px;
+    padding:13px 15px;margin-bottom:10px;max-width:660px;
+    transition:box-shadow .25s, border-color .25s;
+  }
+  .receipt.flash{border-color:var(--teal);box-shadow:0 0 0 3px rgba(115,190,190,.35)}
+  .nullcard{transition:box-shadow .25s}
+  .nullcard.flash{box-shadow:0 0 0 4px rgba(115,190,190,.55)}
+  .receipt .top{display:flex;align-items:center;gap:9px;margin-bottom:5px;flex-wrap:wrap}
+  .rid{font-family:ui-monospace,'Courier New',monospace;font-size:11.5px;color:var(--muted)}
+  .receipt .src{font-size:14px;color:var(--ink);font-weight:bold}
+  .receipt .meta{font-size:12px;color:var(--muted);margin-top:3px}
+  .samplelink{color:var(--muted);text-decoration:underline dotted;cursor:not-allowed}
+
+  /* ---------- method footer ---------- */
+  .method{padding:18px 0 34px}
+  .method p{font-size:13px;color:var(--muted);max-width:640px;margin-bottom:8px}
+  .method a{color:var(--ink)}
+  footer{background:var(--fog);border-top:1px solid var(--hair)}
+  .foot{display:flex;justify-content:space-between;gap:12px;padding:16px 0 26px;font-size:10.5px;letter-spacing:.18em;color:var(--muted);flex-wrap:wrap}
+
+  @media (max-width:560px){
+    .bar{flex-wrap:wrap}
+    h1{font-size:25px}
+    .nullhead{flex-direction:column;gap:10px}
+    .glance .cells{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 10px;justify-content:start}
+    .cell{min-width:0}
+  }
+</style>
+</head>
+<body>
+
+<div class="ribbon"><b>SAMPLE RESULT</b> · DESIGN MOCK · CLAIM, SOURCES, AND QUERIES ARE ILLUSTRATIVE</div>
+
+<header>
+  <div class="wrap">
+    <div class="bar">
+      <div class="lockup" aria-label="AXIOM">
+        <svg width="30" height="30" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="18" cy="18" r="15.5" fill="none" stroke="#15202E" stroke-width="2.8"/>
+          <path d="M11 18.6 L15.8 23.4 L25.2 12.8" fill="none" stroke="#73BEBE" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="word">AXIOM</span>
+      </div>
+      <div class="search">
+        <input class="q" type="text" value="Do cold plunges increase testosterone by 300%?" aria-label="Claim to verify">
+        <button type="button">VERIFY</button>
+      </div>
+    </div>
+    <div class="promise">EVERY CLAIM TIERED: <b>DOCUMENTED</b> · <b>INFERRED</b> · <b>NULL</b> — AND WE SHOW YOU THE NULLS.</div>
+  </div>
+</header>
+
+<div class="glance">
+  <div class="wrap">
+    <div class="cells">
+      <div class="cell"><div class="num">NULL</div><div class="lbl">VERDICT &middot; ON THE NUMBER</div></div>
+      <div class="cell"><div class="num">1</div><div class="lbl">DOCUMENTED</div></div>
+      <div class="cell"><div class="num">2</div><div class="lbl">INFERRED</div></div>
+      <div class="cell"><div class="num">1</div><div class="lbl">HONEST NULL</div></div>
+      <div class="cell"><div class="num">3</div><div class="lbl">RECEIPTS</div></div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+
+    <div class="verdict">
+      <div class="kicker"><div class="kickerbar"></div><div class="kickerlabel">VERIFICATION RESULT</div></div>
+      <h1>The 300% figure reads zero. The cold is real; the number is not.</h1>
+      <div class="sub">Cold-water immersion produces real, measured stress responses. No source we could find supports a 300% testosterone increase.</div>
+    </div>
+
+    <div class="answer">
+      <p>Cold-water immersion reliably triggers acute physiological stress responses — sharp rises in norepinephrine and measurable shifts in cortisol are well documented in controlled studies.<a class="chip chip--doc" href="#r1">DOCUMENTED</a></p>
+      <p>Some small trials report short-term hormonal fluctuations after cold exposure, but sample sizes are tiny and effects fade within hours, so any lasting testosterone benefit is a stretch from the data, not a finding in it.<a class="chip chip--inf" href="#r2">INFERRED</a> The viral posts trace back to podcast commentary, not to a study.<a class="chip chip--inf" href="#r3">INFERRED</a></p>
+      <p>The headline claim — a 300% testosterone increase — appears in no peer-reviewed source we could locate.<a class="chip chip--null" href="#null">NULL</a></p>
+      <div class="assume">
+        <b>SMUGGLED ASSUMPTION</b> — the claim borrows a real number from the wrong hormone: ~200–530% spikes are reported for <i>norepinephrine</i>, not testosterone. The figure migrated between hormones on its way to your feed.
+      </div>
+    </div>
+
+    <section class="nullcard" id="null" aria-labelledby="nulltitle">
+      <div class="nullhead">
+        <svg class="gauge" width="64" height="44" viewBox="0 0 64 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M6 40 A28 28 0 0 1 58 40" fill="none" stroke="rgba(115,190,190,.35)" stroke-width="3" stroke-linecap="round"/>
+          <line x1="32" y1="40" x2="10" y2="24" stroke="#73BEBE" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="32" cy="40" r="3.5" fill="#73BEBE"/>
+          <text x="4" y="16" fill="#73BEBE" font-size="10" font-family="Liberation Sans, Arial, sans-serif" font-weight="bold">0</text>
+        </svg>
+        <div>
+          <div class="kickerlabel">WHAT WE COULDN'T VERIFY</div>
+          <h2 id="nulltitle">No study reporting a ~300% testosterone increase from cold-water immersion. Anywhere.</h2>
+          <div class="why">Most engines hide what they can't find. We log it — with the exact searches we ran, so a null is a checked fact about the record, never a shrug.</div>
+        </div>
+      </div>
+      <div class="queries">
+        <div class="lbl">QUERIES RUN (SAMPLE)</div>
+        <ul>
+          <li>"cold water immersion" testosterone increase percent randomized trial</li>
+          <li>cold plunge testosterone 300% study peer-reviewed</li>
+          <li>cryotherapy OR "cold exposure" serum testosterone men controlled</li>
+          <li>site:pubmed.ncbi.nlm.nih.gov cold immersion testosterone</li>
+        </ul>
+      </div>
+      <div class="flip"><b>WHAT WOULD FLIP THIS NULL</b> — a citable, peer-reviewed study reporting a sustained testosterone increase of that magnitude from cold-water immersion. Find one, and this verdict changes with it.</div>
+      <div class="tagline">A scale that sometimes reads zero is the only scale you can trust when it reads full.</div>
+    </section>
+
+    <section class="receipts" aria-label="Receipts">
+      <h3>Receipts</h3>
+      <div class="receipt" id="r1">
+        <div class="top"><span class="rid">R1</span><span class="chip chip--doc">DOCUMENTED</span></div>
+        <div class="src">Šrámek et al., European Journal of Applied Physiology (2000) — human responses to immersion at different water temperatures</div>
+        <div class="meta">Read 21 Aug 2026 · <span class="samplelink" title="Illustrative link — live receipts resolve to the source">PubMed record (sample)</span></div>
+      </div>
+      <div class="receipt" id="r2">
+        <div class="top"><span class="rid">R2</span><span class="chip chip--inf">INFERRED</span></div>
+        <div class="src">Pilot trial, cold exposure and short-term hormone response in trained men (small n; effects transient)</div>
+        <div class="meta">Read 21 Aug 2026 · <span class="samplelink" title="Illustrative link — live receipts resolve to the source">Journal record (sample)</span></div>
+      </div>
+      <div class="receipt" id="r3">
+        <div class="top"><span class="rid">R3</span><span class="chip chip--inf">INFERRED</span></div>
+        <div class="src">Origin trace — earliest viral appearances cite podcast commentary; no primary study is referenced in the thread chain</div>
+        <div class="meta">Read 21 Aug 2026 · <span class="samplelink" title="Illustrative link — live receipts resolve to the source">Trace notes (sample)</span></div>
+      </div>
+    </section>
+
+    <section class="method" aria-label="Method">
+      <h3>How this verdict works</h3>
+      <p>Every material claim is tiered <b>DOCUMENTED</b> (cited to a source we read), <b>INFERRED</b> (reasoned from the record), or <b>NULL</b> (searched for and not found — queries shown). Verdicts move when the facts move.</p>
+      <p>Corrections are appended to a dated errata log, never silently overwritten. <a href="#" onclick="return false" title="Sample link">View errata log</a> · <a href="#" onclick="return false" title="Sample link">Full method</a></p>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <span>AXIOM · VERIFICATION RESULT · SAMPLE</span>
+      <span>ERRATA-BACKED · NULLS SHOWN</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Chip click: scroll (native anchor) + briefly highlight the target receipt/card
+  document.querySelectorAll('a.chip').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      var t = document.getElementById(chip.getAttribute('href').slice(1));
+      if(!t) return;
+      t.classList.add('flash');
+      setTimeout(function(){ t.classList.remove('flash'); }, 1400);
+    });
+  });
+</script>
+
+</body>
+</html>
