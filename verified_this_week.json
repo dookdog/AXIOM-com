@@ -1,0 +1,12 @@
+{
+ "as_of": "2026-08-18",
+ "cards": [
+  {
+   "id": "001",
+   "claim": "You swallow 8 spiders a year in your sleep.",
+   "verdict": "REJECTED",
+   "documented": "No scientific study supports any such figure; spider behavior argues the opposite.",
+   "honest_null": "The famous '1993 columnist invented it' origin story is itself unverifiable."
+  }
+ ]
+}
