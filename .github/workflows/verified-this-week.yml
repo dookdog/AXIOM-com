@@ -1,0 +1,28 @@
+name: refresh-verified-this-week
+on:
+  schedule:
+    - cron: "0 13 * * 1"   # Mondays 13:00 UTC (~8am Central)
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Touch freshness stamp
+        run: |
+          python3 - << 'PY'
+          import json, datetime, pathlib
+          p = pathlib.Path("verified_this_week.json")
+          data = json.loads(p.read_text()) if p.exists() else {"cards": []}
+          data["as_of"] = datetime.date.today().isoformat()
+          p.write_text(json.dumps(data, indent=1))
+          PY
+      - name: Commit if changed
+        run: |
+          git config user.name "axiom-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add verified_this_week.json
+          git diff --cached --quiet || git commit -m "refresh verified-this-week stamp"
+          git push
