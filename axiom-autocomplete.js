@@ -152,6 +152,10 @@
   }
 
   function select(e) {
+    try {
+      if (navigator.sendBeacon) navigator.sendBeacon(EP + "/select",
+        new Blob([JSON.stringify({ q: input.value, chosen: e.claim })], { type: "text/plain" }));
+    } catch (_) { /* logging must never affect the box */ }
     input.value = e.claim;
     input.dispatchEvent(new Event("input", { bubbles: true }));
     close(); input.focus();
