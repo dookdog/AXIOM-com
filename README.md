@@ -93,17 +93,30 @@ Then in **Settings → Pages**:
 3. Consider swapping `hello@axiom.com` (used in CTAs) for a real mailbox or a form
    endpoint once email is set up on the domain.
 
-## Pre-release teaser (`/preview/`)
+## Gated preview (`/preview/`)
 
-`preview/index.html` is the canonical AXIOM claim-gate teaser (© Unicron Studios,
-LLC / ForcedFlow Labs) — the self-contained static page from the pre-release demo
-modules, carrying the JS port of demo ruleset v0.1. It is **fully unrestricted**:
-no passphrase, open to crawlers (listed in `sitemap.xml`, no robots exclusion).
+`preview/index.html` is an AES-256-GCM passphrase gate in front of the canonical
+AXIOM claim-gate teaser (© Unicron Studios, LLC / ForcedFlow Labs) — the
+self-contained demo page carrying the JS port of demo ruleset v0.1+q. The key is
+derived with PBKDF2-SHA256 and the page decrypts in the browser via WebCrypto, so
+the committed file contains only ciphertext. The plaintext source lives in
+`preview-src/` which is **gitignored** (this repo is public; committing the
+plaintext would defeat the gate). The passphrase is held out-of-band, never in
+the repo.
 
-Earlier this path held an AES-256-GCM passphrase gate around the synthesized
-product page. To restore that setup: the encrypted gate page lives in git history
-(the `#3`–`#13` era of `preview/index.html`), and `scripts/gate-build.py` rebuilds
-it from a plaintext `preview-src/index.html` at any time.
+- Run locally (no passphrase needed — you have the source):
+  `python3 -m http.server 8000` → open `http://localhost:8000/preview-src/`
+- Rebuild the gate / rotate the passphrase:
+  `pip install cryptography && python3 scripts/gate-build.py --password 'new-passphrase'`
+- Recover `preview-src/` on a fresh clone (needs the passphrase):
+  `python3 scripts/gate-build.py --decrypt --password '...'`
+- The gate needs `https://` or `localhost` (WebCrypto secure-context rule); it is
+  `noindex`, excluded from `sitemap.xml`, and disallowed in `robots.txt`.
+
+Anyone with the passphrase can reshare what they see — rotation is re-running the
+build with a new passphrase. The previously ungated teaser (and older ciphertext)
+remains in git history, so the gate locks the door at `/preview/` going forward;
+it cannot unpublish what history already shows.
 
 ## Regenerating image assets
 

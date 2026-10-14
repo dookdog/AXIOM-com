@@ -1,5 +1,6 @@
 # axiom.inc — everyone is welcome, including crawlers.
 User-agent: *
 Allow: /
+Disallow: /preview/
 
 Sitemap: https://axiom.inc/sitemap.xml
